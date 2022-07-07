@@ -1,0 +1,136 @@
+<AMVARIABLE NAME="strURL" VALUE="https://www.rpachallenge.com/" />
+<!--Abrir o site
+
+download do excel
+
+ler excel
+
+preencher todos os campos
+
+clicar em SUBMIT
+
+no final pegar o tempo de execucao apresentado no site e mostrar em uma dialog-->
+<AMREGION NAME="Variaveis" COLLAPSE="no" />
+<AMVARIABLE NAME="strPastaDownload" VALUE="C:\Users\agenterpa2\Downloads" />
+<AMVARIABLE NAME="strArquivoExcel" VALUE="" />
+<AMVARIABLE NAME="first_name" VALUE="" />
+<AMVARIABLE NAME="last_name" VALUE="" />
+<AMVARIABLE NAME="company_name" VALUE="" />
+<AMVARIABLE NAME="role_company" VALUE="" />
+<AMVARIABLE NAME="address" VALUE="" />
+<AMVARIABLE NAME="email" VALUE="" />
+<AMVARIABLE NAME="phone_number" VALUE="" />
+<AMVARIABLE NAME="linha" VALUE="" />
+<AMVARIABLE NAME="resultado" VALUE="" />
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Abrindo o site" COLLAPSE="no" />
+<AMWEBBROWSER URL="%strURL%" BROWSER="chrome" SESSION="BrowserSession1" />
+<AMLOOP FROM="1" TO="60" />
+<AMIF ACTIVITY="window_exists" WINDOWTITLE="Rpa Challenge - Google Chrome" />
+<AMWINDOW ACTIVITY="maximize" WINDOWTITLE="Rpa Challenge - Google Chrome" />
+<AMBREAK />
+<AMIF ACTIVITY="end" />
+<AMWAIT SCALAR="1" />
+<AMSHOWDIALOG MESSAGE="Navegador ou site não liberado, executando nova tentativa." />
+<AMLOOP ACTIVITY="end" />
+<AMIF ACTIVITY="window_exists" WINDOWTITLE="Rpa Challenge - Google Chrome" ACTION="close" />
+<AMSHOWDIALOG MESSAGE="Navegador ou site não liberado" />
+<AMIF ACTIVITY="end" />
+<AMENDREGION />
+<AMREGION NAME="Acessar pasta Download, verificar e excluir possível arquivo" COLLAPSE="no" />
+<AMIF ACTIVITY="file_exist" FILE="%strPastaDownload%\*" />
+<AMFILESYSTEM ACTIVITY="delete" SOURCE="C:\Users\agenterpa2\Downloads\*" TORECYCLE="YES" />
+<AMSHOWDIALOG MESSAGE="Todos os arquivos foram excluídos." />
+<AMELSE />
+<AMSHOWDIALOG MESSAGE="Não existe nenhum arquivo em Downloads" />
+<AMIF ACTIVITY="end" />
+<AMIF ACTIVITY="folder_exist" FOLDER="C:\Users\agenterpa2\Downloads\*" />
+<AMFILESYSTEM ACTIVITY="delete" MODE="folder" SOURCE="C:\Users\agenterpa2\Downloads\*" TORECYCLE="YES" />
+<AMSHOWDIALOG MESSAGE="Todas as pastas foram excluídas" />
+<AMELSE />
+<AMSHOWDIALOG MESSAGE="Não existe nenhuma pasta em Downloads" />
+<AMIF ACTIVITY="end" />
+<AMENDREGION />
+<AMREGION NAME="Download do Excel" COLLAPSE="no" />
+<AMWINDOW WINDOWTITLE="Rpa Challenge - Google Chrome" />
+<AMWEBBROWSER ACTIVITY="click" HTMLTAG="a" SESSION="BrowserSession1" BTNTOCLICKMODE="0" CLICKACTIONMODE="0"><HTMLATTRIBUTE NAME="class" VALUE=" col s12 m12 l12 btn waves-effect waves-light uiColorPrimary center" /></AMWEBBROWSER>
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Validando arquivo" COLLAPSE="no" />
+<AMLOOP FROM="1" TO="60" AM_ENABLED="NO" />
+<AMIF ACTIVITY="file_exist" FILE="C:\Users\agenterpa2\Downloads\challenge.xlsx" AM_ENABLED="NO" />
+<AMSHOWDIALOG MESSAGE="Arquivo challenge encontrado." AM_ENABLED="NO" />
+<AMBREAK AM_ENABLED="NO" />
+<AMIF ACTIVITY="end" AM_ENABLED="NO" />
+<AMWAIT SCALAR="1" AM_ENABLED="NO" />
+<AMSHOWDIALOG MESSAGE="Arquivo challenge não encontrado!" AM_ENABLED="NO" />
+<AMLOOP ACTIVITY="end" AM_ENABLED="NO" />
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Validando arquivo" COLLAPSE="no" />
+<AMLOOP FROM="1" TO="60" />
+<AMLOOP ACTIVITY="folder" FOLDER="%strPastaDownload%" RESULTVARIABLE="strArquivoExcel" MODE="both" />
+<AMSHOWDIALOG>%strArquivoExcel%</AMSHOWDIALOG>
+<AMLOOP ACTIVITY="end" />
+<AMIF ACTIVITY="contains_text" TEXT="%strArquivoExcel%" SUBSTRING=".xlsx" />
+<AMSHOWDIALOG MESSAGE="Arquivo challenge encontrado." />
+<AMBREAK />
+<AMIF ACTIVITY="end" />
+<AMWAIT SCALAR="1" />
+<AMSHOWDIALOG MESSAGE="Arquivo challenge não encontrado!" />
+<AMLOOP ACTIVITY="end" />
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Abrindo e capiturando informações do Excel" COLLAPSE="no" />
+<AMVARIABLE ACTIVITY="set" VARIABLENAME="linha" VALUE="2" />
+<AMEXCEL SESSION="ExcelSession1" WORKBOOK="%strArquivoExcel%" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="first_name" CELLROW="%linha%" CELLCOLUMN="1" />
+<AMSHOWDIALOG AM_ENABLED="NO">%first_name%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="last_name" CELLROW="%linha%" CELLCOLUMN="2" />
+<AMSHOWDIALOG AM_ENABLED="NO">%last_name%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="company_name" CELLROW="%linha%" CELLCOLUMN="3" />
+<AMSHOWDIALOG AM_ENABLED="NO">%company_name%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="role_company" CELLROW="%linha%" CELLCOLUMN="4" />
+<AMSHOWDIALOG AM_ENABLED="NO">%role_company%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="address" CELLROW="%linha%" CELLCOLUMN="5" />
+<AMSHOWDIALOG AM_ENABLED="NO">%address%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="email" CELLROW="%linha%" CELLCOLUMN="6" />
+<AMSHOWDIALOG AM_ENABLED="NO">%email%</AMSHOWDIALOG>
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="phone_number" CELLROW="%linha%" CELLCOLUMN="7" />
+<AMSHOWDIALOG AM_ENABLED="NO">%phone_number%</AMSHOWDIALOG>
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Iniciando os rounds" COLLAPSE="no" />
+<AMWINDOW WINDOWTITLE="Rpa Challenge - Google Chrome" />
+<AMWEBBROWSER ACTIVITY="click" SESSION="BrowserSession1" BTNTOCLICKMODE="0" CLICKACTIONMODE="0"><HTMLATTRIBUTE NAME="class" VALUE="waves-effect col s12 m12 l12 btn-large uiColorButton" /></AMWEBBROWSER>
+<AMENDREGION />
+<!--     -->
+<AMREGION NAME="Looping e lógica" COLLAPSE="no" />
+<AMLOOP ACTIVITY="expression" EXPRESSION="%Len(Trim(first_name)) &gt; 0%" />
+<AMSHOWDIALOG MESSAGE="Iniciando o Loop" AM_ENABLED="NO" />
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%first_name%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelFirstName" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%last_name%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelLastName" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%company_name%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelCompanyName" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%role_company%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelRole" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%address%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelAddress" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%email%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelEmail" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="setvalue" SESSION="BrowserSession1" ATTRIBUTE=":text">%phone_number%<HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelPhone" /></AMWEBBROWSER>
+<AMWEBBROWSER ACTIVITY="click" SESSION="BrowserSession1" BTNTOCLICKMODE="0" CLICKACTIONMODE="0"><HTMLATTRIBUTE NAME="class" VALUE="btn uiColorButton" /></AMWEBBROWSER>
+<!--     -->
+<AMVARIABLE ACTIVITY="increment" RESULTVARIABLE="linha" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="first_name" CELLROW="%linha%" CELLCOLUMN="1" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="last_name" CELLROW="%linha%" CELLCOLUMN="2" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="company_name" CELLROW="%linha%" CELLCOLUMN="3" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="role_company" CELLROW="%linha%" CELLCOLUMN="4" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="address" CELLROW="%linha%" CELLCOLUMN="5" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="email" CELLROW="%linha%" CELLCOLUMN="6" />
+<AMEXCEL ACTIVITY="get_cell" SESSION="ExcelSession1" ACTION="cellbyposition" RESULTVARIABLE="phone_number" CELLROW="%linha%" CELLCOLUMN="7" />
+<AMLOOP ACTIVITY="end" />
+<AMENDREGION />
+<!--     -->
+<AMEXCEL ACTIVITY="close_workbook" SESSION="ExcelSession1" />
+<AMWEBBROWSER ACTIVITY="getvalue" HTMLTAG="div" SESSION="BrowserSession1" RESULTVARIABLE="resultado" ATTRIBUTE=":text"><HTMLATTRIBUTE NAME="class" VALUE="message2" /></AMWEBBROWSER>
+<AMSHOWDIALOG>Tempo de execução: %resultado%</AMSHOWDIALOG>
+<AMWEBBROWSER ACTIVITY="close" SESSION="BrowserSession1" />
+<!--     -->
