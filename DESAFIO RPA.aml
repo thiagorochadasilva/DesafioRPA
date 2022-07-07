@@ -11,7 +11,7 @@ clicar em SUBMIT
 
 no final pegar o tempo de execucao apresentado no site e mostrar em uma dialog-->
 <AMREGION NAME="Variaveis" COLLAPSE="no" />
-<AMVARIABLE NAME="strPastaDownload" VALUE="C:\Users\agenterpa2\Downloads" />
+<AMVARIABLE NAME="strPastaDownload" VALUE="CAMINHO DA PASTA DOWNLOADS ??" />
 <AMVARIABLE NAME="strArquivoExcel" VALUE="" />
 <AMVARIABLE NAME="first_name" VALUE="" />
 <AMVARIABLE NAME="last_name" VALUE="" />
@@ -40,13 +40,13 @@ no final pegar o tempo de execucao apresentado no site e mostrar em uma dialog--
 <AMENDREGION />
 <AMREGION NAME="Acessar pasta Download, verificar e excluir possível arquivo" COLLAPSE="no" />
 <AMIF ACTIVITY="file_exist" FILE="%strPastaDownload%\*" />
-<AMFILESYSTEM ACTIVITY="delete" SOURCE="C:\Users\agenterpa2\Downloads\*" TORECYCLE="YES" />
+<AMFILESYSTEM ACTIVITY="delete" SOURCE="CAMINHO DA PASTA DOWNLOADS???\*" TORECYCLE="YES" />
 <AMSHOWDIALOG MESSAGE="Todos os arquivos foram excluídos." />
 <AMELSE />
 <AMSHOWDIALOG MESSAGE="Não existe nenhum arquivo em Downloads" />
 <AMIF ACTIVITY="end" />
-<AMIF ACTIVITY="folder_exist" FOLDER="C:\Users\agenterpa2\Downloads\*" />
-<AMFILESYSTEM ACTIVITY="delete" MODE="folder" SOURCE="C:\Users\agenterpa2\Downloads\*" TORECYCLE="YES" />
+<AMIF ACTIVITY="folder_exist" FOLDER="CAMINHO DA PASTA DOWNLOADS???\*" />
+<AMFILESYSTEM ACTIVITY="delete" MODE="folder" SOURCE="CAMINHO DA PASTA DOWNLOADS???\*" TORECYCLE="YES" />
 <AMSHOWDIALOG MESSAGE="Todas as pastas foram excluídas" />
 <AMELSE />
 <AMSHOWDIALOG MESSAGE="Não existe nenhuma pasta em Downloads" />
